@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class PathVisualizer {
+public class GridVisualizer {
     private static BufferedImage generatePathVisual(NodeGrid grid) {
         BufferedImage image = new BufferedImage(grid.getWidth(), grid.getHeight(), BufferedImage.TYPE_INT_RGB);
 
