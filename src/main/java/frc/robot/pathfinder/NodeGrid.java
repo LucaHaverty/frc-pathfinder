@@ -40,6 +40,8 @@ public class NodeGrid {
                 nodes[x][y] = new Node(x, y, worldPos, distanceFromEdge, pathfinder);
             }
         }
+
+        PathVisualizer.visualizePathAsPNG(this, "C:/Users/lucah/Desktop/test");
     }
 
     /** @return the field position of the given grid position */
@@ -75,5 +77,23 @@ public class NodeGrid {
             }
         }
         return neighbors;
+    }
+
+    /** @return the width of this grid */
+    public int getWidth() {
+        return numNodesX;
+    }
+
+    /** @return the height of this grid */
+    public int getHeight() {
+        return numNodesY;
+    }
+
+    /** @return the node at (x, y) clamped to be instide the grid */
+    public Node getNodeAt(int x, int y) {
+        x = MathUtil.clamp(x, 0, numNodesX-1);
+        y = MathUtil.clamp(y, 0, numNodesY-1);
+
+        return nodes[x][y];
     }
 }

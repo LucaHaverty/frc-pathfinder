@@ -24,7 +24,6 @@ public class Pathfinder {
      */
     public Pathfinder(double robotWidth, String distanceMapName) {
         BufferedImage image = null;
-        System.out.println(Filesystem.getDeployDirectory().toString() + "/" + distanceMapName + ".png");
         try {
             image = ImageIO.read(new File(Filesystem.getDeployDirectory(), "pathfinder/" + distanceMapName + ".png"));
         } catch (IOException e) {
@@ -37,7 +36,7 @@ public class Pathfinder {
         }
 
         this.robotWidth = robotWidth;
-        grid = new NodeGrid(new Translation2d(0, 0), new Translation2d(3, 3), robotWidth, image, this);
+        grid = new NodeGrid(new Translation2d(0, 0), new Translation2d(16, 8.2), robotWidth, image, this);
     }
 
     /**

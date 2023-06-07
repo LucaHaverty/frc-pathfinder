@@ -27,7 +27,7 @@ public class Node {
         this.driveable = (distFromObj) > 0;
 
         double cutoff = pathfinder.distanceCutoff;
-        if (distFromObj < cutoff) // if the robot is near a wall, scale distanceWeight from 0-1 based on how close it is
+        if (distFromObj < cutoff) // if the node is near a wall, scale distanceWeight from 0-1 based on how close it is
             distanceWeight = MathUtil.interpolate(1, 0, distFromObj / cutoff);
         else distanceWeight = 0;
     }
