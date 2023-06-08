@@ -41,7 +41,7 @@ public class NodeGrid {
             }
         }
 
-        PathVisualizer.visualizePathAsPNG(this, "C:/Users/lucah/Desktop/test");
+        GridVisualizer.visualizePathAsPNG(this, "C:/Users/lucah/Desktop/test");
     }
 
     /** @return the field position of the given grid position */
