@@ -1,0 +1,9 @@
+{
+    "config" : {
+    "fieldSizeX": 3.0,
+    "fieldSizeY": 3.0
+    },
+    
+    "obstacles": {
+    }
+}

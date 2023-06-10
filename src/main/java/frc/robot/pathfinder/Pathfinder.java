@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
+import frc.robot.pathfinder.fieldloading.FieldConfigParser;
 
 public class Pathfinder {
     public double distanceCutoff = 1;
@@ -23,6 +24,8 @@ public class Pathfinder {
      * @param distanceMapName the name of the imported distance map to use when pathfinding
      */
     public Pathfinder(double robotWidth, String distanceMapName) {
+        FieldConfigParser.parseField("TestField");
+
         BufferedImage image = null;
         try {
             image = ImageIO.read(new File(Filesystem.getDeployDirectory(), "pathfinder/" + distanceMapName + ".png"));
