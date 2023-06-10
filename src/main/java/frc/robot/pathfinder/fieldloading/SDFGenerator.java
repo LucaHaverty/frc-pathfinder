@@ -3,18 +3,28 @@ package frc.robot.pathfinder.fieldloading;
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class SDFGenerator {
+    public static double getDistanceFromNearestObstacle(Field field, Translation2d position) {
+        double minDistance = Double.MAX_VALUE;
 
-    public abstract class Shape {
+        for (Obstacle obstacle : field.obstacles) {
+            double distance = obstacle.getDistanceFrom(position);
+            if (distance < minDistance)
+                minDistance = distance;
+        }
+        return minDistance;
+    }
+
+    public abstract class Obstacle {
         protected final Translation2d position;
 
-        public Shape(Translation2d position) {
+        public Obstacle(Translation2d position) {
             this.position = position;
         }
 
         public abstract double getDistanceFrom(Translation2d point);
     }
     
-    public class Rectangle extends Shape {
+    public class Rectangle extends Obstacle {
         private final Translation2d scale;
 
         public Rectangle(Translation2d position, Translation2d scale) {
@@ -33,7 +43,7 @@ public class SDFGenerator {
         }
     }
 
-    public class Circle extends Shape {
+    public class Circle extends Obstacle {
         private final double radius;
 
         public Circle(Translation2d position, double radius) {
