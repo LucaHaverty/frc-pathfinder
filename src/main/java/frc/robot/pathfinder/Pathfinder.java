@@ -26,7 +26,7 @@ public class Pathfinder {
      */
     public Pathfinder(double robotWidth, String distanceMapName) {
         Field testField = FieldParser.parseField("TestField");
-        System.out.println(testField.obstacles.get(0).position);
+        //System.out.println(testField.obstacles.get(0).position);
 
         BufferedImage image = null;
         try {
