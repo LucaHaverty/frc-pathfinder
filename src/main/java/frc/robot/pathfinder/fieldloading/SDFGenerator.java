@@ -1,5 +1,7 @@
 package frc.robot.pathfinder.fieldloading;
 
+import org.json.simple.JSONObject;
+
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class SDFGenerator {
@@ -14,7 +16,7 @@ public class SDFGenerator {
         return minDistance;
     }
 
-    public abstract class Obstacle {
+    public static abstract class Obstacle {
         protected final Translation2d position;
 
         public Obstacle(Translation2d position) {
@@ -22,9 +24,21 @@ public class SDFGenerator {
         }
 
         public abstract double getDistanceFrom(Translation2d point);
+
+        public static Obstacle fromJSON(JSONObject obstacle) {
+            Translation2d position = new Translation2d((double)obstacle.get("xPos"), (double)obstacle.get("yPos"));
+
+            String obstacleType = (String)obstacle.get("type");
+            switch (obstacleType) {
+                case "rectangle":
+                        return new Rectangle(position, new Translation2d((double)obstacle.get("width"), (double)obstacle.get("height")));
+                default:
+                    return null;
+            }
+        }
     }
 
-    public class Rectangle extends Obstacle {
+    public static class Rectangle extends Obstacle {
         private final Translation2d scale;
 
         public Rectangle(Translation2d position, Translation2d scale) {
@@ -43,7 +57,7 @@ public class SDFGenerator {
         }
     }
 
-    public class Circle extends Obstacle {
+    public static class Circle extends Obstacle {
         private final double radius;
 
         public Circle(Translation2d position, double radius) {

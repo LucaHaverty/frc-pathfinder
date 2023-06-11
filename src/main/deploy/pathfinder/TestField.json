@@ -4,6 +4,13 @@
     "fieldSizeY": 3.0
     },
     
-    "obstacles": {
-    }
+    "obstacles": [
+        {
+            "type": "rectangle",
+            "xPos": 1.5,
+            "yPos": 1.5,
+            "width": 0.5,
+            "height": 0.5
+        }
+    ]
 }

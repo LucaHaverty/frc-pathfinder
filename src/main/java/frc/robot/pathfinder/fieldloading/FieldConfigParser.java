@@ -4,12 +4,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import edu.wpi.first.wpilibj.Filesystem;
+import frc.robot.pathfinder.fieldloading.SDFGenerator.Obstacle;
 
 public class FieldConfigParser {
     public static void parseField(String fieldName) {
@@ -27,11 +30,24 @@ public class FieldConfigParser {
         }
 
         JSONObject config = (JSONObject)fieldData.get("config");
+        JSONArray JSONObstacles = (JSONArray)fieldData.get("obstacles");
 
-        double fieldSizeX = (double)config.get("fieldSizeX");
-        double fieldSizeY = (double)config.get("fieldSizeY");
+        ArrayList<Obstacle> obstacles = parseObstacles(JSONObstacles);
 
-        System.out.println(fieldSizeX + " , " + fieldSizeY);
+        System.out.println(obstacles.get(0).position);
+    }
+
+    private static ArrayList<Obstacle> parseObstacles(JSONArray JSONObstacles) {
+        ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
+
+        for (Object obstacle : JSONObstacles) {
+            obstacles.add(Obstacle.fromJSON((JSONObject)obstacle));
+        }
+        return obstacles;
+    }
+
+    private static void parseConfig(JSONObject config) {
+        // TODO: create and return object to store config
     }
 }
 
