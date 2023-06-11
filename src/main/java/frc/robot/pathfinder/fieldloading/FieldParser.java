@@ -11,11 +11,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
+import frc.robot.pathfinder.fieldloading.Field.FieldConfig;
 import frc.robot.pathfinder.fieldloading.SDFGenerator.Obstacle;
 
-public class FieldConfigParser {
-    public static void parseField(String fieldName) {
+public class FieldParser {
+    public static Field parseField(String fieldName) {
         JSONParser parser = new JSONParser();
 
         JSONObject fieldData = null;
@@ -29,12 +31,13 @@ public class FieldConfigParser {
             e.printStackTrace();
         }
 
-        JSONObject config = (JSONObject)fieldData.get("config");
+        JSONObject JSONConfig = (JSONObject)fieldData.get("config");
         JSONArray JSONObstacles = (JSONArray)fieldData.get("obstacles");
 
         ArrayList<Obstacle> obstacles = parseObstacles(JSONObstacles);
+        FieldConfig config = parseConfig(JSONConfig);
 
-        System.out.println(obstacles.get(0).position);
+        return new Field(config, obstacles);
     }
 
     private static ArrayList<Obstacle> parseObstacles(JSONArray JSONObstacles) {
@@ -46,8 +49,10 @@ public class FieldConfigParser {
         return obstacles;
     }
 
-    private static void parseConfig(JSONObject config) {
-        // TODO: create and return object to store config
+    private static FieldConfig parseConfig(JSONObject config) {
+        Translation2d size = new Translation2d((double)config.get("fieldSizeX"), (double)config.get("fieldSizeY"));
+
+        return new FieldConfig(size);
     }
 }
 

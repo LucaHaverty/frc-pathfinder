@@ -17,7 +17,7 @@ public class SDFGenerator {
     }
 
     public static abstract class Obstacle {
-        protected final Translation2d position;
+        public final Translation2d position;
 
         public Obstacle(Translation2d position) {
             this.position = position;
@@ -39,7 +39,7 @@ public class SDFGenerator {
     }
 
     public static class Rectangle extends Obstacle {
-        private final Translation2d scale;
+        public final Translation2d scale;
 
         public Rectangle(Translation2d position, Translation2d scale) {
             super(position);
@@ -58,7 +58,7 @@ public class SDFGenerator {
     }
 
     public static class Circle extends Obstacle {
-        private final double radius;
+        public final double radius;
 
         public Circle(Translation2d position, double radius) {
             super(position);

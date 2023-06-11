@@ -12,7 +12,8 @@ import java.io.IOException;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
-import frc.robot.pathfinder.fieldloading.FieldConfigParser;
+import frc.robot.pathfinder.fieldloading.Field;
+import frc.robot.pathfinder.fieldloading.FieldParser;
 
 public class Pathfinder {
     public double distanceCutoff = 1;
@@ -24,7 +25,8 @@ public class Pathfinder {
      * @param distanceMapName the name of the imported distance map to use when pathfinding
      */
     public Pathfinder(double robotWidth, String distanceMapName) {
-        FieldConfigParser.parseField("TestField");
+        Field testField = FieldParser.parseField("TestField");
+        System.out.println(testField.obstacles.get(0).position);
 
         BufferedImage image = null;
         try {
