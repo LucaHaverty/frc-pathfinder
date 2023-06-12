@@ -67,7 +67,7 @@ public class SDFGenerator {
 
         /** A rectangle shaped obstacle on the field
          * 
-         * @param position the bottom left corner of this rectangle
+         * @param position the center position of this rectangle
          * @param scale the scale of this rectangle
          */
         public Rectangle(Translation2d position, Translation2d scale) {
@@ -77,7 +77,7 @@ public class SDFGenerator {
 
         @Override
         public double getDistanceFrom(Translation2d point) {
-            point.minus(position);
+            point = point.minus(position);
 
             Translation2d distance2d = new Translation2d(Math.abs(point.getX()), Math.abs(point.getY()))
                     .minus(scale.div(2));
@@ -102,9 +102,8 @@ public class SDFGenerator {
 
         @Override
         public double getDistanceFrom(Translation2d point) {
-            point.plus(position);
-
-            return position.getNorm() - radius;
+            point = point.minus(position);
+            return point.getNorm() - radius;
         }
     }
 

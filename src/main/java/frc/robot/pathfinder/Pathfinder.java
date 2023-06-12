@@ -10,18 +10,18 @@ import frc.robot.pathfinder.fieldloading.FieldParser;
 
 public class Pathfinder {
     public double distanceCutoff = 1;
-    public double robotWidth = 0;
+    public double robotWidthMeters = 0;
     public NodeGrid grid = null;
 
     /**
-     * @param robotWidth the width of the robot including bumpers
+     * @param robotWidthMeters the width of the robot including bumpers
      * @param distanceMapName the name of the imported distance map to use when pathfinding
      */
-    public Pathfinder(double robotWidth, String distanceMapName) {
+    public Pathfinder(double robotWidthMeters, String distanceMapName) {
         Field testField = FieldParser.parseField("TestField");
 
-        this.robotWidth = robotWidth;
-        grid = new NodeGrid(robotWidth, distanceCutoff, testField);
+        this.robotWidthMeters = robotWidthMeters;
+        grid = new NodeGrid(robotWidthMeters, distanceCutoff, testField);
     }
 
     /**

@@ -1,17 +1,23 @@
 {
     "config" : {
     "bottomLeftPositionMeters": [0.0, 0.0],
-    "fieldSizeMeters": [3.0, 3.0],
-    "nodeSpacingMeters": 0.25
+    "fieldSizeMeters": [5.0, 5.0],
+    "nodeSpacingMeters": 0.1
     },
     
     "obstacles": [
         {
-            "type": "rectangle",
+            "type": "circle",
             "xPos": 1.5,
             "yPos": 1.5,
-            "width": 0.5,
-            "height": 0.5
+            "radius": 1.0
+        },
+        {
+            "type": "rectangle",
+            "xPos": 3.0,
+            "yPos": 3.0,
+            "width": 1.5,
+            "height": 3.0
         }
     ]
 }
