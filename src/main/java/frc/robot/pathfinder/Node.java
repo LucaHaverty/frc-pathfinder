@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 public class Node {
     public final int gridX;
     public final int gridY;
-    public final Translation2d worldPos;
+    public final Translation2d fieldPos;
     public final double distFromObj;
     public final double distanceWeight;
 
@@ -18,15 +18,16 @@ public class Node {
 
     public Node parent;
 
-    public Node(int gridX, int gridY, Translation2d worldPos, double distFromObj, Pathfinder pathfinder)
+    public Node(int gridX, int gridY, Translation2d fieldPos, double distFromObj, double distanceCutoff,
+            double robotWidth)
     {
         this.gridX = gridX;
         this.gridY = gridY;
-        this.worldPos = worldPos;
-        this.distFromObj = distFromObj - pathfinder.robotWidth/2d;
+        this.fieldPos = fieldPos;
+        this.distFromObj = distFromObj - robotWidth/2d;
         this.driveable = (distFromObj) > 0;
 
-        double cutoff = pathfinder.distanceCutoff;
+        double cutoff = distanceCutoff;
         if (distFromObj < cutoff) // if the node is near a wall, scale distanceWeight from 0-1 based on how close it is
             distanceWeight = MathUtil.interpolate(1, 0, distFromObj / cutoff);
         else distanceWeight = 0;

@@ -1,43 +1,42 @@
 package frc.robot.pathfinder;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
+import frc.robot.pathfinder.fieldloading.Field;
+import frc.robot.pathfinder.fieldloading.SDFGenerator;
 
 public class NodeGrid {
-    private Node[][] nodes;
-    private double nodeSpacing;
+    private final Field field;
 
-    private Translation2d botLeftBound;
-    private Translation2d fieldSize;
+    private final Node[][] nodes;
 
-    private int numNodesX;
-    private int numNodesY;
+    private final int numNodesX;
+    private final int numNodesY;
 
-    public NodeGrid(Translation2d botLeftBound, Translation2d topRightBound, double robotWidth,
-            BufferedImage distanceMap, Pathfinder pathfinder) {
-        numNodesX = distanceMap.getWidth();
-        numNodesY = distanceMap.getHeight();
+    /**
+     * @param robotWidth the width of the robot including the bumper
+     * @param field      the field to generate nodes from
+     */
+    public NodeGrid(double robotWidth, double distanceCutoff, Field field) {
+        this.field = field;
 
-        this.botLeftBound = botLeftBound;
-        this.fieldSize = topRightBound.minus(botLeftBound);
-        this.nodeSpacing = fieldSize.getX() / numNodesX;
+        numNodesX = (int)(field.fieldConfig.fieldSizeMeters.getX()/field.fieldConfig.nodeSpacingMeters);
+        numNodesY = (int)(field.fieldConfig.fieldSizeMeters.getY()/field.fieldConfig.nodeSpacingMeters);
 
-        // Center nodes within the field
-        Translation2d centerOffset = new Translation2d(fieldSize.getX() % nodeSpacing, fieldSize.getY() % nodeSpacing);
-        this.botLeftBound = botLeftBound.plus(centerOffset.div(2d));
+        // TODO:Center nodes within the field
+        // Translation2d centerOffset = new Translation2d(fieldSize.getX() %
+        //         nodeSpacing, fieldSize.getY() % nodeSpacing);
+        // this.bottomRightPosition = bottomRightPosition.plus(centerOffset.div(2d));
 
         nodes = new Node[numNodesX][numNodesY];
 
         for (int x = 0; x < numNodesX; x++) {
             for (int y = 0; y < numNodesY; y++) {
-                Translation2d worldPos = GridToWorldPos(x, y);
-                double distanceFromEdge = new Color(distanceMap.getRGB(x, y)).getRed() / 255d * fieldSize.getX()
-                        - robotWidth / 2;
-                nodes[x][y] = new Node(x, y, worldPos, distanceFromEdge, pathfinder);
+                Translation2d fieldPos = GridToFieldPos(x, y);
+                double distanceFromEdge = SDFGenerator.getDistanceFromNearestObstacle(field, fieldPos);
+                nodes[x][y] = new Node(x, y, fieldPos, distanceFromEdge, distanceCutoff, robotWidth);
             }
         }
 
@@ -45,14 +44,14 @@ public class NodeGrid {
     }
 
     /** @return the field position of the given grid position */
-    private Translation2d GridToWorldPos(int gridX, int gridY) {
-        return botLeftBound.plus(new Translation2d(gridX, gridY).times(nodeSpacing));
+    private Translation2d GridToFieldPos(int gridX, int gridY) {
+        return field.fieldConfig.bottomLeftPositionMeters.plus(new Translation2d(gridX, gridY).times(field.fieldConfig.nodeSpacingMeters));
     }
 
-    /** @return the closest node to the given position */
+    /** @return the closest node to the given position (clamped to be in bounds) */
     public Node FindCloseNode(Translation2d pos) {
-        int x = (int) Math.round((pos.getX() - botLeftBound.getX()) / nodeSpacing);
-        int y = (int) Math.round((pos.getY() - botLeftBound.getY()) / nodeSpacing);
+        int x = (int) Math.round((pos.getX() - field.fieldConfig.bottomLeftPositionMeters.getX()) / field.fieldConfig.nodeSpacingMeters);
+        int y = (int) Math.round((pos.getY() - field.fieldConfig.bottomLeftPositionMeters.getY()) / field.fieldConfig.nodeSpacingMeters);
 
         // Clamp position to be in bounds
         x = MathUtil.clamp(x, 0, nodes.length - 1);
@@ -91,8 +90,8 @@ public class NodeGrid {
 
     /** @return the node at (x, y) clamped to be instide the grid */
     public Node getNodeAt(int x, int y) {
-        x = MathUtil.clamp(x, 0, numNodesX-1);
-        y = MathUtil.clamp(y, 0, numNodesY-1);
+        x = MathUtil.clamp(x, 0, numNodesX - 1);
+        y = MathUtil.clamp(y, 0, numNodesY - 1);
 
         return nodes[x][y];
     }

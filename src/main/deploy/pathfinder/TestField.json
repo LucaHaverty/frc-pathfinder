@@ -1,7 +1,8 @@
 {
     "config" : {
-    "fieldSizeX": 3.0,
-    "fieldSizeY": 3.0
+    "bottomLeftPositionMeters": [0.0, 0.0],
+    "fieldSizeMeters": [3.0, 3.0],
+    "nodeSpacingMeters": 0.25
     },
     
     "obstacles": [

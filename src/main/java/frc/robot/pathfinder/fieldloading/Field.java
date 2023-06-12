@@ -8,10 +8,14 @@ import frc.robot.pathfinder.fieldloading.SDFGenerator.Obstacle;
 
 public class Field {
     public static class FieldConfig {
-        public Translation2d size;
+        public Translation2d bottomLeftPositionMeters;
+        public Translation2d fieldSizeMeters;
+        public double nodeSpacingMeters;
 
-        public FieldConfig(Translation2d size) {
-            this.size = size;
+        public FieldConfig(Translation2d bottomLeftPositionMeters, Translation2d fieldSizeMeters, double nodeSpacingMeters) {
+            this.bottomLeftPositionMeters = bottomLeftPositionMeters;
+            this.fieldSizeMeters = fieldSizeMeters;
+            this.nodeSpacingMeters = nodeSpacingMeters;
         }
     }
 

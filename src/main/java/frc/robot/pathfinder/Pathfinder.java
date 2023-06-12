@@ -4,14 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
-import javax.imageio.ImageIO;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.Filesystem;
 import frc.robot.pathfinder.fieldloading.Field;
 import frc.robot.pathfinder.fieldloading.FieldParser;
 
@@ -26,22 +19,9 @@ public class Pathfinder {
      */
     public Pathfinder(double robotWidth, String distanceMapName) {
         Field testField = FieldParser.parseField("TestField");
-        //System.out.println(testField.obstacles.get(0).position);
-
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File(Filesystem.getDeployDirectory(), "pathfinder/" + distanceMapName + ".png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (image == null) {
-            System.out.println("Image is NULL");
-            return;
-        }
 
         this.robotWidth = robotWidth;
-        grid = new NodeGrid(new Translation2d(0, 0), new Translation2d(16, 8.2), robotWidth, image, this);
+        grid = new NodeGrid(robotWidth, distanceCutoff, testField);
     }
 
     /**
@@ -53,7 +33,7 @@ public class Pathfinder {
         Node end = grid.FindCloseNode(goalPos);
 
         if (start == end || !start.driveable || !end.driveable)
-            return new PathfinderResult(false, null, null);
+            return new PathfinderResult(false, null);
 
         boolean pathFound = false;
         ArrayList<Node> path = new ArrayList<Node>();
@@ -100,7 +80,7 @@ public class Pathfinder {
                 }
             }
         }
-        return new PathfinderResult(pathFound, simplifiedPath, path);
+        return new PathfinderResult(pathFound, simplifiedPath);
     }
 
     /** @return the path traced back from the end node */
@@ -123,18 +103,18 @@ public class Pathfinder {
         ArrayList<Translation2d> waypoints = new ArrayList<Translation2d>();
         Translation2d oldDirection = new Translation2d();
 
-        waypoints.add(path.get(0).worldPos);
+        waypoints.add(path.get(0).fieldPos);
 
         for (int i = 1; i < path.size() - 1; i++) {
 
-            Translation2d newDirection = path.get(i).worldPos.minus(path.get(i + 1).worldPos);
+            Translation2d newDirection = path.get(i).fieldPos.minus(path.get(i + 1).fieldPos);
             if (!newDirection.equals(oldDirection)) {
-                waypoints.add(path.get(i).worldPos);
+                waypoints.add(path.get(i).fieldPos);
                 oldDirection = newDirection;
             }
         }
-        waypoints.remove(path.get(1).worldPos);
-        waypoints.add(path.get(path.size() - 1).worldPos);
+        waypoints.remove(path.get(1).fieldPos);
+        waypoints.add(path.get(path.size() - 1).fieldPos);
 
         return waypoints;
     }

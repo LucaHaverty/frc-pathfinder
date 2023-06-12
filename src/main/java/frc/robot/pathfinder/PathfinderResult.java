@@ -13,13 +13,11 @@ import edu.wpi.first.math.geometry.Translation2d;
 public class PathfinderResult {
     private final boolean pathFound;
     private final ArrayList<Translation2d> simplifiedPath;
-    private final ArrayList<Node> path;
 
     /** A result returned by Pathfinder.FindPath() */
-    public PathfinderResult(boolean pathFound, ArrayList<Translation2d> simplifiedPath, ArrayList<Node> path) {
+    public PathfinderResult(boolean pathFound, ArrayList<Translation2d> simplifiedPath) {
         this.pathFound = pathFound;
         this.simplifiedPath = simplifiedPath;
-        this.path = path;
     }
 
     /** @return if a valid path was found */

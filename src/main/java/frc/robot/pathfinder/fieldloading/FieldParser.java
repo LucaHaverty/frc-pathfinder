@@ -31,28 +31,36 @@ public class FieldParser {
             e.printStackTrace();
         }
 
-        JSONObject JSONConfig = (JSONObject)fieldData.get("config");
-        JSONArray JSONObstacles = (JSONArray)fieldData.get("obstacles");
+        JSONObject configJSON = (JSONObject)fieldData.get("config");
+        JSONArray obstaclesJSON = (JSONArray)fieldData.get("obstacles");
 
-        ArrayList<Obstacle> obstacles = parseObstacles(JSONObstacles);
-        FieldConfig config = parseConfig(JSONConfig);
+        ArrayList<Obstacle> obstacles = parseObstacles(obstaclesJSON);
+        FieldConfig config = parseConfig(configJSON);
 
         return new Field(config, obstacles);
     }
 
-    private static ArrayList<Obstacle> parseObstacles(JSONArray JSONObstacles) {
+    private static ArrayList<Obstacle> parseObstacles(JSONArray obstaclesJSON) {
         ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 
-        for (Object obstacle : JSONObstacles) {
+        for (Object obstacle : obstaclesJSON) {
             obstacles.add(Obstacle.fromJSON((JSONObject)obstacle));
         }
         return obstacles;
     }
 
     private static FieldConfig parseConfig(JSONObject config) {
-        Translation2d size = new Translation2d((double)config.get("fieldSizeX"), (double)config.get("fieldSizeY"));
+        JSONArray bottomLeftPositionMetersJSON = (JSONArray)config.get("bottomLeftPositionMeters");
+        JSONArray fieldSizeMetersJSON = (JSONArray)config.get("fieldSizeMeters");
 
-        return new FieldConfig(size);
+        Translation2d bottomLeftPositionMeters = new Translation2d(
+                (double)bottomLeftPositionMetersJSON.get(0), (double)bottomLeftPositionMetersJSON.get(1));
+
+        Translation2d fieldSizeMeters = new Translation2d(
+                (double)fieldSizeMetersJSON.get(0), (double)fieldSizeMetersJSON.get(1));
+                
+        double nodeSpacingMeters = (double)config.get("nodeSpacingMeters");
+
+        return new FieldConfig(bottomLeftPositionMeters, fieldSizeMeters, nodeSpacingMeters);
     }
 }
-
