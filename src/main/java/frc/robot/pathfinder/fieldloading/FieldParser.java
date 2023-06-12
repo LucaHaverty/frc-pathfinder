@@ -17,6 +17,11 @@ import frc.robot.pathfinder.fieldloading.Field.FieldConfig;
 import frc.robot.pathfinder.fieldloading.SDFGenerator.Obstacle;
 
 public class FieldParser {
+    /** Parses a field saved in a JSON file into a {@link Field} object
+     * 
+     * @param fieldName the name of the JSON file
+     * @return a {@link Filed} object containing data from the JSON file 
+     */
     public static Field parseField(String fieldName) {
         JSONParser parser = new JSONParser();
 
@@ -40,6 +45,11 @@ public class FieldParser {
         return new Field(config, obstacles);
     }
 
+    /** Parses through the obstacles in a saved field JSON
+     * 
+     * @param obstaclesJSON the JSON object containing the obstacles
+     * @return an array of obstacles
+     */
     private static ArrayList<Obstacle> parseObstacles(JSONArray obstaclesJSON) {
         ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 
@@ -49,6 +59,11 @@ public class FieldParser {
         return obstacles;
     }
 
+    /** Parses through the config in a saved field JSON
+     * 
+     * @param config the JSON object containing field config
+     * @return a {@link FieldConfig} object containing data from the JSON
+     */
     private static FieldConfig parseConfig(JSONObject config) {
         JSONArray bottomLeftPositionMetersJSON = (JSONArray)config.get("bottomLeftPositionMeters");
         JSONArray fieldSizeMetersJSON = (JSONArray)config.get("fieldSizeMeters");

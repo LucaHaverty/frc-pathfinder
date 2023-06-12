@@ -5,6 +5,11 @@ import org.json.simple.JSONObject;
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class SDFGenerator {
+    /**
+     * @param field the field to use
+     * @param position the real life position of the robot on the field
+     * @return the distance to the nearest edge of any obstacle or wall
+     */
     public static double getDistanceFromNearestObstacle(Field field, Translation2d position) {
         double minDistance = Double.MAX_VALUE;
 
@@ -19,28 +24,37 @@ public class SDFGenerator {
     public static abstract class Obstacle {
         protected final Translation2d position;
 
+        /** Represents any obstacle or obstruction on the field
+         * 
+         * @param position the location of this obstacle
+         */
         public Obstacle(Translation2d position) {
             this.position = position;
         }
 
         public abstract double getDistanceFrom(Translation2d point);
 
-        public static Obstacle fromJSON(JSONObject obstacle) {
-            Translation2d position = new Translation2d((double) obstacle.get("xPos"), (double) obstacle.get("yPos"));
+        /** Create an obstacle instace from a JSON obstacle
+         * 
+         * @param obstacleJSON the JSON object containing the obstacles data
+         * @return an obstacle created from the JSON object inputed
+         */
+        public static Obstacle fromJSON(JSONObject obstacleJSON) {
+            Translation2d position = new Translation2d((double) obstacleJSON.get("xPos"), (double) obstacleJSON.get("yPos"));
 
-            String obstacleType = (String) obstacle.get("type");
+            String obstacleType = (String) obstacleJSON.get("type");
             switch (obstacleType) {
                 case "rectangle":
                     return new Rectangle(position,
-                            new Translation2d((double) obstacle.get("width"), (double) obstacle.get("height")));
+                            new Translation2d((double) obstacleJSON.get("width"), (double) obstacleJSON.get("height")));
 
                 case "circle":
-                    return new Circle(position, (double) obstacle.get("radius"));
+                    return new Circle(position, (double) obstacleJSON.get("radius"));
 
                 case "fieldBoundaries":
                     return new Rectangle(position,
-                            new Translation2d((double) obstacle.get("fieldSizeX"),
-                                    (double) obstacle.get("FieldSizeY")));
+                            new Translation2d((double) obstacleJSON.get("fieldSizeX"),
+                                    (double) obstacleJSON.get("FieldSizeY")));
 
                 default:
                     return null;
@@ -51,6 +65,11 @@ public class SDFGenerator {
     public static class Rectangle extends Obstacle {
         private final Translation2d scale;
 
+        /** A rectangle shaped obstacle on the field
+         * 
+         * @param position the bottom left corner of this rectangle
+         * @param scale the scale of this rectangle
+         */
         public Rectangle(Translation2d position, Translation2d scale) {
             super(position);
             this.scale = scale;
@@ -71,6 +90,11 @@ public class SDFGenerator {
     public static class Circle extends Obstacle {
         private final double radius;
 
+        /** A circle shaped obstacle on the field
+         * 
+         * @param position the center position of this circle
+         * @param radius the radius of this circle
+         */
         public Circle(Translation2d position, double radius) {
             super(position);
             this.radius = radius;
@@ -88,6 +112,11 @@ public class SDFGenerator {
         private final Translation2d minBounds;
         private final Translation2d maxBounds;
 
+        /** The outside boundaries of the field
+         * 
+         * @param minBounds the bottom left most corner of the field
+         * @param maxBounds the top right most corner of the field
+         */
         public FieldBoundaries(Translation2d minBounds, Translation2d maxBounds) {
             super(null);
 

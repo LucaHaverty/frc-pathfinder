@@ -28,7 +28,7 @@ public class Pathfinder {
      * @return PathfinderResult contains a list of waypoints from currentPos to
      *         goalPos avoiding obstacles
      */
-    public PathfinderResult FindPath(Translation2d currentPos, Translation2d goalPos) {
+    public PathfinderResult findPath(Translation2d currentPos, Translation2d goalPos) {
         Node start = grid.FindCloseNode(currentPos);
         Node end = grid.FindCloseNode(goalPos);
 
@@ -56,9 +56,9 @@ public class Pathfinder {
             closedSet.add(currentNode);
 
             if (currentNode == end) {
-                path = RetracePath(start, end);
+                path = retracePath(start, end);
 
-                simplifiedPath = SimplifyPath(path);
+                simplifiedPath = simplifyPath(path);
 
                 simplifiedPath.set(0, currentPos);
                 simplifiedPath.set(simplifiedPath.size() - 1, goalPos);
@@ -69,11 +69,11 @@ public class Pathfinder {
             for (Node neighbor : grid.GetNeighbors(currentNode)) {
                 if (!neighbor.driveable || closedSet.contains(neighbor))
                     continue;
-                double newMovementCostToNeighbor = currentNode.gCost + GetDistance(currentNode, neighbor);
+                double newMovementCostToNeighbor = currentNode.gCost + getDistance(currentNode, neighbor);
                 newMovementCostToNeighbor += neighbor.distanceWeight * 10;
                 if (newMovementCostToNeighbor < neighbor.gCost || !openSet.contains(neighbor)) {
                     neighbor.gCost = newMovementCostToNeighbor;
-                    neighbor.hCost = GetDistance(neighbor, end);
+                    neighbor.hCost = getDistance(neighbor, end);
                     neighbor.parent = currentNode;
                     if (!openSet.contains(neighbor))
                         openSet.add(neighbor);
@@ -84,7 +84,7 @@ public class Pathfinder {
     }
 
     /** @return the path traced back from the end node */
-    static ArrayList<Node> RetracePath(Node start, Node end) {
+    static ArrayList<Node> retracePath(Node start, Node end) {
         ArrayList<Node> path = new ArrayList<Node>();
         Node currentNode = end;
 
@@ -99,7 +99,7 @@ public class Pathfinder {
     }
 
     /** @return a simplified version of the path that only contains turns */
-    static ArrayList<Translation2d> SimplifyPath(ArrayList<Node> path) {
+    static ArrayList<Translation2d> simplifyPath(ArrayList<Node> path) {
         ArrayList<Translation2d> waypoints = new ArrayList<Translation2d>();
         Translation2d oldDirection = new Translation2d();
 
@@ -120,7 +120,7 @@ public class Pathfinder {
     }
 
     /** @return the smallest number of steps between nodeA and nodeB ignoring obstacles */
-    static double GetDistance(Node nodeA, Node nodeB) {
+    static double getDistance(Node nodeA, Node nodeB) {
         double distX = Math.abs(nodeA.gridX - nodeB.gridX);
         double distY = Math.abs(nodeA.gridY - nodeB.gridY);
 

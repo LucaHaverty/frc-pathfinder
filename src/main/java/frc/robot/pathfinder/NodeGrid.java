@@ -25,7 +25,7 @@ public class NodeGrid {
         numNodesX = (int)(field.fieldConfig.fieldSizeMeters.getX()/field.fieldConfig.nodeSpacingMeters);
         numNodesY = (int)(field.fieldConfig.fieldSizeMeters.getY()/field.fieldConfig.nodeSpacingMeters);
 
-        // TODO:Center nodes within the field
+        // TODO: Center nodes within the field
         // Translation2d centerOffset = new Translation2d(fieldSize.getX() %
         //         nodeSpacing, fieldSize.getY() % nodeSpacing);
         // this.bottomRightPosition = bottomRightPosition.plus(centerOffset.div(2d));
@@ -40,7 +40,7 @@ public class NodeGrid {
             }
         }
 
-        GridVisualizer.visualizePathAsPNG(this, "C:/Users/lucah/Desktop/test");
+        GridVisualizer.visualizeGridAsPNG(this, "C:/Users/lucah/Desktop/test/test.png");
     }
 
     /** @return the field position of the given grid position */
