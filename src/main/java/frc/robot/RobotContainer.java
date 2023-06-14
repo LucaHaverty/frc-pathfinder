@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -22,6 +26,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    PathPlannerTrajectory traj = pathfinder.findPath(new Translation2d(0.5, 0.5), new Translation2d(2.5, 2.5)).getAsTrajectory(new PathConstraints(1, 1));
+    System.out.println(traj);
     // Configure the button bindings
     configureButtonBindings();
 

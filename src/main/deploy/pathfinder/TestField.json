@@ -11,13 +11,6 @@
             "xPos": 1.5,
             "yPos": 1.5,
             "radius": 1.0
-        },
-        {
-            "type": "rectangle",
-            "xPos": 3.0,
-            "yPos": 3.0,
-            "width": 1.5,
-            "height": 3.0
         }
     ]
 }

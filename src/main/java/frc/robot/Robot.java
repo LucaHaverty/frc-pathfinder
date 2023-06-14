@@ -4,17 +4,9 @@
 
 package frc.robot;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
-import java.awt.Color;
-import java.awt.image.BufferedImage;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
