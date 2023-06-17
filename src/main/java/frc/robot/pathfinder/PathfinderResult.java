@@ -46,4 +46,8 @@ public class PathfinderResult {
 
         return PathPlanner.generatePath(pathConstraints, points);
     }
+
+    public ArrayList<Translation2d> getPositionList() {
+        return simplifiedPath;
+    }
 }

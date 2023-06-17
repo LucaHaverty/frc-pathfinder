@@ -40,7 +40,10 @@ public class FieldParser {
         JSONArray obstaclesJSON = (JSONArray)fieldData.get("obstacles");
 
         ArrayList<Obstacle> obstacles = parseObstacles(obstaclesJSON);
+
         FieldConfig config = parseConfig(configJSON);
+
+        obstacles.add(new SDFGenerator.FieldBoundaries(config.bottomLeftPositionMeters, config.bottomLeftPositionMeters.plus(config.fieldSizeMeters)));
 
         return new Field(config, obstacles);
     }
@@ -56,6 +59,7 @@ public class FieldParser {
         for (Object obstacle : obstaclesJSON) {
             obstacles.add(Obstacle.fromJSON((JSONObject)obstacle));
         }
+
         return obstacles;
     }
 

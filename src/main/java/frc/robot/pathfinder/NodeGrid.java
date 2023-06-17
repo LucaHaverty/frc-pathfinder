@@ -40,7 +40,7 @@ public class NodeGrid {
             }
         }
 
-        GridVisualizer.visualizeGridAsPNG(this, field, "C:/Users/lucah/Desktop/test/test.png");
+        //GridVisualizer.visualizeGridAsPNG(this, field, "C:/Users/lucah/Desktop/test/test.png");
     }
 
     /** @return the field position of the given grid position */

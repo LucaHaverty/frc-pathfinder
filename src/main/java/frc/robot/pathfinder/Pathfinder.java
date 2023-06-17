@@ -12,16 +12,17 @@ public class Pathfinder {
     public double distanceCutoff = 1;
     public double robotWidthMeters = 0;
     public NodeGrid grid = null;
+    public Field field;
 
     /**
      * @param robotWidthMeters the width of the robot including bumpers
      * @param distanceMapName the name of the imported distance map to use when pathfinding
      */
     public Pathfinder(double robotWidthMeters, String distanceMapName) {
-        Field testField = FieldParser.parseField("TestField");
+        field = FieldParser.parseField("TestField");
 
         this.robotWidthMeters = robotWidthMeters;
-        grid = new NodeGrid(robotWidthMeters, distanceCutoff, testField);
+        grid = new NodeGrid(robotWidthMeters, distanceCutoff, field);
     }
 
     /**

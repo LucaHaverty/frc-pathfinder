@@ -6,6 +6,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import frc.robot.pathfinder.fieldloading.Field;
 
 public class GridVisualizer {
@@ -19,16 +22,29 @@ public class GridVisualizer {
 
         for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
-                // if (grid.getNodeAt(x, y).distanceToNearestObstacle > 0) {
-                //     image.setRGB(x, y, getIntFromColor(1, 0, 0));
-                // }
-                // else image.setRGB(x, y, getIntFromColor(1, 1, 1));
-                double scaledDistance = Math.max(grid.getNodeAt(x, y).distanceToNearestObstacle, 0) / field.fieldConfig.fieldSizeMeters.getX();
-                image.setRGB(x, y, getIntFromColor(scaledDistance, 0, 0));
-
+                if (grid.getNodeAt(x, y).driveable) {
+                    image.setRGB(x, y, getIntFromColor(.3, .3, .3));
+                }
+                else image.setRGB(x, y, getIntFromColor(0, 0, 0));
+                // double scaledDistance = Math.max(grid.getNodeAt(x, y).distanceToNearestObstacle, 0) / field.fieldConfig.fieldSizeMeters.getX();
+                // image.setRGB(x, y, getIntFromColor(scaledDistance, 0, 0));
             }
         }
         return image;
+    }
+
+    private static void addWaypoints(BufferedImage image, PathfinderResult result, NodeGrid grid) {
+        for(Translation2d waypoint : result.getPositionList()) {
+            Node node = grid.FindCloseNode(waypoint);
+            image.setRGB(node.gridX, node.gridY, getIntFromColor(1, 0, 0));
+        }
+    }
+
+    private static void addTrajectory(BufferedImage image, Trajectory trajectory, NodeGrid grid) {
+        for(State state : trajectory.getStates()) {
+            Node node = grid.FindCloseNode(state.poseMeters.getTranslation());
+            image.setRGB(node.gridX, node.gridY, getIntFromColor(1, 0, 0));
+        }
     }
 
     /** Save a png image containing pixels that represent specific nodes to the output location
@@ -37,8 +53,9 @@ public class GridVisualizer {
      * @param field the field to use configuration settings from for the visualization
      * @param outputLocation the location to save to (include fileName.png)
      */
-    public static void visualizeGridAsPNG(NodeGrid grid, Field field, String outputLocation) {
-        BufferedImage image = generateGridVisual(grid, field);
+    public static void visualizeGridAsPNG(Pathfinder pathfinder, Trajectory trajectory, String outputLocation) {
+        BufferedImage image = generateGridVisual(pathfinder.grid, pathfinder.field);
+        addTrajectory(image, trajectory, pathfinder.grid);
         
         File outputfile = new File(outputLocation);
         try {

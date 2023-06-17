@@ -107,7 +107,7 @@ public class SDFGenerator {
         }
     }
 
-    public class FieldBoundaries extends Obstacle {
+    public static class FieldBoundaries extends Obstacle {
         private final Translation2d minBounds;
         private final Translation2d maxBounds;
 

@@ -5,13 +5,14 @@
 package frc.robot;
 
 import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.pathfinder.GridVisualizer;
 import frc.robot.pathfinder.Pathfinder;
+import frc.robot.pathfinder.PathfinderResult;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -21,13 +22,16 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer { 
-  private final Pathfinder pathfinder = new Pathfinder(Units.inchesToMeters(0), "chargedUp");
+  private final Pathfinder pathfinder = new Pathfinder(1.0, "chargedUp");
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    PathPlannerTrajectory traj = pathfinder.findPath(new Translation2d(0.5, 0.5), new Translation2d(2.5, 2.5)).getAsTrajectory(new PathConstraints(1, 1));
-    System.out.println(traj);
+    PathfinderResult result = pathfinder.findPath(new Translation2d(1.0, 1.6), new Translation2d(19.4, 8.0));
+    GridVisualizer.visualizeGridAsPNG(pathfinder, result.getAsTrajectory(new PathConstraints(1, 1)), "C:/Users/lucah/Desktop/test/test.png");
+    
+
+    System.out.println(result.getPositionList());
     // Configure the button bindings
     configureButtonBindings();
 
