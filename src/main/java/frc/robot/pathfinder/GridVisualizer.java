@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.pathplanner.lib.PathPlannerTrajectory;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.Trajectory.State;
@@ -40,7 +42,7 @@ public class GridVisualizer {
         }
     }
 
-    private static void addTrajectory(BufferedImage image, Trajectory trajectory, NodeGrid grid) {
+    private static void addTrajectory(BufferedImage image, PathPlannerTrajectory trajectory, NodeGrid grid) {
         for(State state : trajectory.getStates()) {
             Node node = grid.FindCloseNode(state.poseMeters.getTranslation());
             image.setRGB(node.gridX, node.gridY, getIntFromColor(1, 0, 0));
@@ -53,7 +55,7 @@ public class GridVisualizer {
      * @param field the field to use configuration settings from for the visualization
      * @param outputLocation the location to save to (include fileName.png)
      */
-    public static void visualizeGridAsPNG(Pathfinder pathfinder, Trajectory trajectory, String outputLocation) {
+    public static void visualizeGridAsPNG(Pathfinder pathfinder, PathPlannerTrajectory trajectory, String outputLocation) {
         BufferedImage image = generateGridVisual(pathfinder.grid, pathfinder.field);
         addTrajectory(image, trajectory, pathfinder.grid);
         
