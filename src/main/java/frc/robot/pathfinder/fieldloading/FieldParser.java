@@ -20,7 +20,7 @@ public class FieldParser {
     /** Parses a field saved in a JSON file into a {@link Field} object
      * 
      * @param fieldName the name of the JSON file
-     * @return a {@link Filed} object containing data from the JSON file 
+     * @return a {@link Field} object containing data from the JSON file 
      */
     public static Field parseField(String fieldName) {
         JSONParser parser = new JSONParser();

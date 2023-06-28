@@ -5,7 +5,8 @@ import org.json.simple.JSONObject;
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class SDFGenerator {
-    /**
+    /** Calculates the distance from position to the nearest obstacle on field
+     * 
      * @param field the field to use
      * @param position the real life position of the robot on the field
      * @return the distance to the nearest edge of any obstacle or wall
