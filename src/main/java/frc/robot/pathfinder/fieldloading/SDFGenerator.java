@@ -23,14 +23,14 @@ public class SDFGenerator {
     }
 
     public static abstract class Obstacle {
-        protected final Translation2d position;
+        protected final Translation2d _position;
 
         /** Represents any obstacle or obstruction on the field
          * 
          * @param position the location of this obstacle
          */
         public Obstacle(Translation2d position) {
-            this.position = position;
+            this._position = position;
         }
 
         public abstract double getDistanceFrom(Translation2d point);
@@ -64,7 +64,7 @@ public class SDFGenerator {
     }
 
     public static class Rectangle extends Obstacle {
-        private final Translation2d scale;
+        private final Translation2d _scale;
 
         /** A rectangle shaped obstacle on the field
          * 
@@ -73,15 +73,15 @@ public class SDFGenerator {
          */
         public Rectangle(Translation2d position, Translation2d scale) {
             super(position);
-            this.scale = scale;
+            this._scale = scale;
         }
 
         @Override
         public double getDistanceFrom(Translation2d point) {
-            point = point.minus(position);
+            point = point.minus(_position);
 
             Translation2d distance2d = new Translation2d(Math.abs(point.getX()), Math.abs(point.getY()))
-                    .minus(scale.div(2));
+                    .minus(_scale.div(2));
             return (new Translation2d(
                         Math.max(distance2d.getX(), 0), Math.max(distance2d.getY(), 0)).getNorm()
                     + Math.min(Math.max(distance2d.getX(), distance2d.getY()), 0));
@@ -89,7 +89,7 @@ public class SDFGenerator {
     }
 
     public static class Circle extends Obstacle {
-        private final double radius;
+        private final double _radius;
 
         /** A circle shaped obstacle on the field
          * 
@@ -98,19 +98,19 @@ public class SDFGenerator {
          */
         public Circle(Translation2d position, double radius) {
             super(position);
-            this.radius = radius;
+            this._radius = radius;
         }
 
         @Override
         public double getDistanceFrom(Translation2d point) {
-            point = point.minus(position);
-            return point.getNorm() - radius;
+            point = point.minus(_position);
+            return point.getNorm() - _radius;
         }
     }
 
     public static class FieldBoundaries extends Obstacle {
-        private final Translation2d minBounds;
-        private final Translation2d maxBounds;
+        private final Translation2d _minBounds;
+        private final Translation2d _maxBounds;
 
         /** The outside boundaries of the field
          * 
@@ -120,14 +120,14 @@ public class SDFGenerator {
         public FieldBoundaries(Translation2d minBounds, Translation2d maxBounds) {
             super(null);
 
-            this.minBounds = minBounds;
-            this.maxBounds = maxBounds;
+            this._minBounds = minBounds;
+            this._maxBounds = maxBounds;
         }
 
         @Override
         public double getDistanceFrom(Translation2d point) {
-            double xDistance = Math.min(point.getX() - minBounds.getX(), maxBounds.getX() - point.getX());
-            double yDistance = Math.min(point.getY() - minBounds.getY(), maxBounds.getY() - point.getY());
+            double xDistance = Math.min(point.getX() - _minBounds.getX(), _maxBounds.getX() - point.getX());
+            double yDistance = Math.min(point.getY() - _minBounds.getY(), _maxBounds.getY() - point.getY());
 
             return Math.min(xDistance, yDistance);
         }

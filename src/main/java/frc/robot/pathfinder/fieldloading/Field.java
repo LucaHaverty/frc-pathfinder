@@ -26,7 +26,7 @@ public class Field {
         }
     }
 
-    public final FieldConfig fieldConfig;
+    public final FieldConfig config;
     public final ArrayList<Obstacle> obstacles;
 
     /** Contains all the information needed to generate a NodeGrid including positions of objects 
@@ -34,8 +34,8 @@ public class Field {
      * @param fieldConfig the configuration of this field (size, node spacing, etc.) 
      * @param obstacles a list of all the obstacles present on the field
      */
-    public Field(FieldConfig fieldConfig, ArrayList<Obstacle> obstacles) {
-        this.fieldConfig = fieldConfig;
+    public Field(FieldConfig config, ArrayList<Obstacle> obstacles) {
+        this.config = config;
         this.obstacles = obstacles;
     }
 }

@@ -7,7 +7,6 @@ public class Node {
     public final int gridX;
     public final int gridY;
     public final Translation2d fieldPos;
-    public final double distanceToNearestObstacle;
     public final double distanceWeight;
 
     public final boolean driveable;
@@ -33,7 +32,8 @@ public class Node {
         this.gridX = gridX;
         this.gridY = gridY;
         this.fieldPos = fieldPos;
-        this.distanceToNearestObstacle = distanceToNearestObstacle - robotWidth/2d;
+
+        distanceToNearestObstacle -= robotWidth/2d; // account for width of robot
         this.driveable = (distanceToNearestObstacle) > 0;
 
         double cutoff = distanceCutoff;

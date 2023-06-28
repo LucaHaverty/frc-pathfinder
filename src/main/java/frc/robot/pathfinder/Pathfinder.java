@@ -9,8 +9,8 @@ import frc.robot.pathfinder.fieldloading.Field;
 import frc.robot.pathfinder.fieldloading.FieldParser;
 
 public class Pathfinder {
-    public double distanceCutoff = 1;
-    public double robotWidthMeters = 0;
+    public static final double DISTANCE_CUTOFF = 1;
+
     public NodeGrid grid = null;
     public Field field;
 
@@ -21,8 +21,7 @@ public class Pathfinder {
     public Pathfinder(double robotWidthMeters, String distanceMapName) {
         field = FieldParser.parseField("TestField");
 
-        this.robotWidthMeters = robotWidthMeters;
-        grid = new NodeGrid(robotWidthMeters, distanceCutoff, field);
+        grid = new NodeGrid(robotWidthMeters, field);
     }
 
     /**

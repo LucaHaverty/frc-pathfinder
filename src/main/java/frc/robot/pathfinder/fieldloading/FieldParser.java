@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import frc.robot.pathfinder.fieldloading.Field.FieldConfig;
 import frc.robot.pathfinder.fieldloading.SDFGenerator.Obstacle;
 
-public class FieldParser {
+public final class FieldParser {
     /** Parses a field saved in a JSON file into a {@link Field} object
      * 
      * @param fieldName the name of the JSON file
