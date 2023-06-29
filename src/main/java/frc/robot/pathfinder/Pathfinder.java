@@ -19,7 +19,7 @@ public class Pathfinder {
      * @param distanceMapName the name of the imported distance map to use when pathfinding
      */
     public Pathfinder(double robotWidthMeters, String distanceMapName) {
-        field = FieldParser.parseField("TestField");
+        field = FieldParser.parseField(distanceMapName);
 
         grid = new NodeGrid(robotWidthMeters, field);
     }

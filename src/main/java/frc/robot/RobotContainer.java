@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer { 
-  private final Pathfinder pathfinder = new Pathfinder(1.0, "chargedUp");
+  private final Pathfinder pathfinder = new Pathfinder(1.0, "TestField");
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
