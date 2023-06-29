@@ -1,4 +1,4 @@
-package frc.robot.pathfinder.fieldloading;
+package frc.robot.pathfinder.field_loading;
 
 import org.json.simple.JSONObject;
 

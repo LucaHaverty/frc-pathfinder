@@ -1,4 +1,4 @@
-package frc.robot.pathfinder.fieldloading;
+package frc.robot.pathfinder.field_loading;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,8 +13,8 @@ import org.json.simple.parser.ParseException;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
-import frc.robot.pathfinder.fieldloading.Field.FieldConfig;
-import frc.robot.pathfinder.fieldloading.SDFGenerator.Obstacle;
+import frc.robot.pathfinder.field_loading.Field.FieldConfig;
+import frc.robot.pathfinder.field_loading.SDFGenerator.Obstacle;
 
 public final class FieldParser {
     /** Parses a field saved in a JSON file into a {@link Field} object

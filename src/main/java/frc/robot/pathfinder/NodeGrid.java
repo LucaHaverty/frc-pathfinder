@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
-import frc.robot.pathfinder.fieldloading.Field;
-import frc.robot.pathfinder.fieldloading.SDFGenerator;
+import frc.robot.pathfinder.field_loading.Field;
+import frc.robot.pathfinder.field_loading.SDFGenerator;
 
 public class NodeGrid {
     private final Field _field;

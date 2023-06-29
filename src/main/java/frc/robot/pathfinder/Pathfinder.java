@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import frc.robot.pathfinder.fieldloading.Field;
-import frc.robot.pathfinder.fieldloading.FieldParser;
+import frc.robot.pathfinder.field_loading.Field;
+import frc.robot.pathfinder.field_loading.FieldParser;
 
 public class Pathfinder {
     public static final double DISTANCE_CUTOFF = 1;

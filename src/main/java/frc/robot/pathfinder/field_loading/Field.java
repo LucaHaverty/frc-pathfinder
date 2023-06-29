@@ -1,10 +1,10 @@
-package frc.robot.pathfinder.fieldloading;
+package frc.robot.pathfinder.field_loading;
 
 
 import java.util.ArrayList;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import frc.robot.pathfinder.fieldloading.SDFGenerator.Obstacle;
+import frc.robot.pathfinder.field_loading.SDFGenerator.Obstacle;
 
 public class Field {
 
